@@ -1,0 +1,2 @@
+# JAMMLOG
+Django Toy Project
