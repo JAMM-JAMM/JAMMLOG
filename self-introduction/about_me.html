@@ -40,15 +40,34 @@
         </nav>
 
         <div class="container">
-            <h1>About Me</h1>
-            <h2>JAMM</h2>
-            <h3>Django Toy Project</h3>
+            <div class="row">
+                <div class="col-9">
+                    <h1>About Me</h1>
+                    <h2>JAMM</h2>
+                    <h3>Django Toy Project</h3>
 
-            <button onclick="whatTimeIsIt()">현재 시간</button>
-            <hr/>
-
-            <a href="index.html">Go to Home</a>
-            <img src="./images/1.jpg" height="400px">
+                    <button onclick="whatTimeIsIt()">현재 시간</button>
+                    <hr/>
+                    <a href="index.html">Go to Home</a>
+                </div>
+                <div class="col-3">
+                    <img src="./images/1.jpg" class="img-fluid w-100">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h2>Portfolio</h2>
+                </div>
+                <div class="col-sm col-lg-4 bg-info">
+                  <img src="./images/2.jpg" class="img-fluid">
+                </div>
+                <div class="col-sm col-lg-4 bg-secondary">
+                  <img src="./images/3.jpg" class="img-fluid">
+                </div>
+                <div class="col-sm col-lg-4 bg-warning">
+                  <img src="./images/4.jpg" class="img-fluid">
+                </div>
+              </div>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
