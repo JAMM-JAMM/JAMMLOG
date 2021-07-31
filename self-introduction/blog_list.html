@@ -43,7 +43,7 @@
         </nav>
 
         <!-- Modal -->
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="logInModalLabel" aria-hidden="true">
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="logInModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -53,10 +53,20 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-dark btn-block btn-sm">Log in with google</button>
+                                <button type="button" class="btn btn-outline-dark btn-block btn-sm">Log in with E-mail</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-dark btn-block btn-sm">Sign Up with E-mail</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <span aria-hiddne="true">Close</span>
+                        </button>
                     </div>
                 </div>
             </div>
