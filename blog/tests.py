@@ -131,3 +131,74 @@ class TestView(TestCase):
         두 개의 포스트 레코드가 생성되었으므로, '아직 게시물이 없습니다.'라는 문구가
         메인 영역에 더 이상 나타나지 않아야 한다.
         '''
+
+    def test_post_detail(self):
+        # 1.1 포스트가 하나 있다.
+        post_001 = Post.objects.create(
+            title="첫 번째 포스트입니다.",
+            content="Hello World. We are the world.",
+        )
+
+        '''
+        test_post_detail() 함수를 실행하면 다시 새 데이터베이스를 만든다.
+        새 데이터베이스에는 아무것도 없는 상태이므로 포스트를 하나 만든다.
+        '''
+
+        # 1.2 그 포스트의 url은 '/blog/1/'이다.
+        self.assertEqual(post_001.get_absolute_url(), '/blog/1/')
+
+        '''
+        첫 번째 포스트(post_001)가 만들어졌으니, 이 포스트 레코드의 pk는 1이다.
+        따라서, 이 포스트의 url은 '/blog/1/'이 된다.
+        '''
+
+        # 2. 첫 번째 포스트의 상세 페이지 테스트
+        # 2.1 첫 번째 포스트의 url로 접근하면 정상적으로 작동한다. (status_code: 200)
+        response = self.client.get(post_001.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        '''
+        '/blog/1/'로 접근했을 때, status_code 값으로 200이 반환되는지 확인한다.
+        '''
+
+        # 2.2 포스트 목록 페이지와 똑같은 네비게이션 바가 있다.
+
+        navbar = soup.nav
+        self.assertIn('Blog', navbar.text)
+        self.assertIn('About Me', navbar.text)
+
+        '''
+        네비게이션 바의 텍스트가 포스트 목록 페이지의 것과 똑같은지 점검
+        '''
+
+        # 2.3 첫 번째 포스트의 제목이 웹 브라우저 탭 타이틀에 들어있다.
+        self.assertIn(post_001.title, soup.title.text)
+
+        '''
+        새로 생성한 포스트의 title이 HTML의 title 태그의 택스트에 있는지 점검
+        '''
+
+        # 2.4 첫 번째 포스트의 제목이 포스트 영역에 있다.
+        main_area = soup.find('div', id='main-area')
+
+        '''
+        HTML의 div 태그에서 id가 main-area인 영역을 찾는다.
+        '''
+
+        post_area = main_area.find('div', id='post-area')
+
+        '''
+        main-area 영역의 div 태그에서 id가 post-area인 영역을 찾는다.
+        '''
+
+        self.assertIn(post_001.title, post_area.text)
+
+        '''
+        post_001 포스트의 title 필드 값이 포스트 영역 안에 있는 지 확인한다.
+        '''
+
+        # 2.5 첫 번째 포스트의 작성자(author)가 포스트 영역에 있다. (아직 구현할 수 없음)
+
+        # 2.6 첫 번째 포스트의 내용이 포스트 영역에 있다.
+        self.assertIn(post_001.content, post_area.text)
