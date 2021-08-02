@@ -14,6 +14,7 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}" media="screen"/>
+        <script src="https://kit.fontawesome.com/e6236333ef.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Responsive navbar-->
@@ -66,7 +67,24 @@
                     <p>{{ post.content }}</p>
 
                     {% if post.file_upload %}
-                        <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download>Download</a>
+                        <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download>
+                            Download:
+
+                            {% if post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+                                <i class="fas fa-file-excel"></i>
+                            {% elif post.get_file_ext == 'csv' %}
+                                <i class="fas fa-file-csv"></i>
+                            {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+                                <i class="fas fa-file-word"></i>
+                            {% elif post.get_file_ext == 'jpg' or post.get_file_ext == 'png' or post.get_file_ext == 'jpeg' %}
+                                <i class="far fa-image"></i>
+                            {% elif post.get_file_ext == 'pdf' %}
+                                <i class="fas fa-file"></i>
+                            {% else %}
+                                <i class="fas fa-file"></i>
+                            {% endif %}
+                            {{ post.get_file_name }}
+                        </a>
                     {% endif %}
 
                     <hr>
