@@ -9,6 +9,30 @@ class TestView(TestCase):
     def setUp(self):
         self.client = Client()
     
+    def navbar_test(self, soup):
+        navbar = soup.nav
+        '''
+        soup.nav로 soup에 담긴 내용 중 nav 태그의 요소들만 가져와서 navbar에 저장한다.
+        '''
+
+        self.assertIn('Blog', navbar.text)
+        self.assertIn('About Me', navbar.text)
+        '''
+        navbar의 텍스트 중에서 Blog와 About me가 있는 지 확인한다.
+        '''
+
+        logo_btn = navbar.find('a', text='JAMMLOG')
+        self.assertEqual(logo_btn.attrs['href'], '/')
+
+        home_btn = navbar.find('a', text='Home')
+        self.assertEqual(home_btn.attrs['href'], '/')
+
+        blog_btn = navbar.find('a', text='Blog')
+        self.assertEqual(blog_btn.attrs['href'], '/blog/')
+
+        about_me_btn = navbar.find('a', text='About Me')
+        self.assertEqual(about_me_btn.attrs['href'], '/about_me/')
+    
     def test_post_list(self):
 
         # 1.1 포스트 목록 페이지를 가져온다.
@@ -46,18 +70,24 @@ class TestView(TestCase):
         '''
 
         # 1.4 네비게이션 바가 존재한다.
-        navbar = soup.nav
+        # navbar = soup.nav
 
         '''
         soup.nav로 soup에 담긴 내용 중 nav 태그의 요소들만 가져와서 navbar에 저장한다.
         '''
 
         # 1.5 Blog, About Me라는 문구가 내비게이션 바에 존재한다.
-        self.assertIn('Blog', navbar.text)
-        self.assertIn('About Me', navbar.text)
+        # self.assertIn('Blog', navbar.text)
+        # self.assertIn('About Me', navbar.text)
 
         '''
         navbar의 텍스트 중에서 Blog와 About me가 있는 지 확인한다.
+        '''
+
+        self.navbar_test(soup)
+        '''
+        beautifulsoup을 통해서 가져온 파싱된 HTML 요소를 navbar_test() 함수에서
+        받아 테스트하기 위해 navbar_test() 함수의 매개변수로 soup를 지정한다.
         '''
 
         # 2.1 메인 영역에 게시물이 하나도 없다면
@@ -164,13 +194,15 @@ class TestView(TestCase):
 
         # 2.2 포스트 목록 페이지와 똑같은 네비게이션 바가 있다.
 
-        navbar = soup.nav
-        self.assertIn('Blog', navbar.text)
-        self.assertIn('About Me', navbar.text)
+        # navbar = soup.nav
+        # self.assertIn('Blog', navbar.text)
+        # self.assertIn('About Me', navbar.text)
 
         '''
         네비게이션 바의 텍스트가 포스트 목록 페이지의 것과 똑같은지 점검
         '''
+
+        self.navbar_test(soup)
 
         # 2.3 첫 번째 포스트의 제목이 웹 브라우저 탭 타이틀에 들어있다.
         self.assertIn(post_001.title, soup.title.text)
